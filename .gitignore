@@ -14,3 +14,12 @@ crash.log
 
 # For built boxes
 *.box
+
+# For built images
+*.img
+
+# Ignore all files in output directory
+output/
+
+# Ignore compressed files
+*.tar.gz
