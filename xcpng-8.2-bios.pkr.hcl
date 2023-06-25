@@ -47,10 +47,17 @@ build {
     post-processors {
       post-processor shell-local {
         inline = [
+          "echo 'Change to output directory'",
           "cd output",
+          "echo 'Create tarball of output file'",
           "tar -czvf ${var.filename} *",
-          "mv ${var.filename} .."
+          "echo 'Move tarball to artifacts directory'",
+          "mv ${var.filename} ../artifacts/${var.filename}-$(date +%Y%m%d%H%M%S).tar.gz",
+          "echo 'Change back to root directory'",
+          "cd ../",
+          "echo 'Cleanup output directory'",
+          "rm -rf output",
         ]
       }
-  }
+    }
 }
