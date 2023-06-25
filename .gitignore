@@ -21,5 +21,8 @@ crash.log
 # Ignore all files in output directory
 output/
 
+# Ignore all files in artifacts directory
+artifacts/
+
 # Ignore compressed files
 *.tar.gz
