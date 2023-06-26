@@ -28,4 +28,4 @@ artifacts/
 *.tar.gz
 
 # Ignore answerfile.xml in any directory
-answerfile.xml
+http/answerfile.xml
