@@ -19,10 +19,15 @@ variable "iso_url" {
   default = "https://mirrors.xcp-ng.org/isos/8.2/xcp-ng-8.2.1.iso?https=1"
 }
 
-/* variable "centos8_sha256sum_url" {
+variable "root_pass_hash" {
   type    = string
-  default = "https://mirrors.edge.kernel.org/centos/8.4.2105/isos/x86_64/CHECKSUM"
-} */
+  default = "root"
+}
+
+variable "xcp-ng-checksum" {
+  type    = string
+  default = "93853aba9a71900fe43fd5a0082e2af6ab89acd14168f058ffc89d311690a412"
+}
 
 source "qemu" "xcp-ng" {
   efi_boot       = true
@@ -40,7 +45,7 @@ source "qemu" "xcp-ng" {
   disk_size        = "60G"
   headless         = false
   http_directory   = "http"
-  iso_checksum     = "none"
+  iso_checksum     = "sha256:${var.xcp-ng-checksum}"
   iso_url          = var.iso_url
   memory           = 8192
   qemuargs         = [["-serial", "stdio"]]
@@ -50,6 +55,16 @@ source "qemu" "xcp-ng" {
 
 build {
   sources = ["source.qemu.xcp-ng"]
+
+  provisioner "shell-local" {
+    inline = [
+      "echo 'Generate answerfile.xml'",
+      "envsubst < templates/answerfile.tpl > http/answerfile.xml",
+    ]
+    environment_vars = [
+      "ROOT_PASS_HASH=${var.root_pass_hash}",
+    ]
+  }
 
     post-processors {
       post-processor shell-local {

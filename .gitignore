@@ -26,3 +26,6 @@ artifacts/
 
 # Ignore compressed files
 *.tar.gz
+
+# Ignore answerfile.xml in any directory
+**/answerfile.xml
