@@ -21,7 +21,6 @@ variable "iso_url" {
 
 variable "root_pass_hash" {
   type    = string
-  default = "root"
 }
 
 variable "xcp-ng-checksum" {
@@ -48,9 +47,11 @@ source "qemu" "xcp-ng" {
   iso_checksum     = "sha256:${var.xcp-ng-checksum}"
   iso_url          = var.iso_url
   memory           = 8192
-  qemuargs         = [["-serial", "stdio"]]
+  qemuargs         = [["-serial", "stdio", "-device", "nvme",]]
+  disk_interface   = "nvme"
   shutdown_timeout = "1h"
   output_directory = "output"
+  format           = "qcow2"
 }
 
 build {
@@ -66,20 +67,20 @@ build {
     ]
   }
 
-    post-processors {
-      post-processor shell-local {
-        inline = [
-          "echo 'Change to output directory'",
-          "cd output",
-          "echo 'Create tarball of output file'",
-          "tar -czvf ${var.filename} *",
-          "echo 'Move tarball to artifacts directory'",
-          "mv ${var.filename} ../artifacts/${var.filename}-$(date +%Y%m%d%H%M%S).tar.gz",
-          "echo 'Change back to root directory'",
-          "cd ../",
-          "echo 'Cleanup output directory'",
-          "rm -rf output",
-        ]
-      }
+  post-processors {
+    post-processor shell-local {
+      inline = [
+        "echo 'Change to output directory'",
+        "cd output",
+        "echo 'Create tarball of output file'",
+        "tar -czvf ${var.filename} *",
+        "echo 'Move tarball to artifacts directory'",
+        "mv ${var.filename} ../artifacts/${var.filename}-$(date +%Y%m%d%H%M%S).tar.gz",
+        "echo 'Change back to root directory'",
+        "cd ../",
+        "echo 'Cleanup output directory'",
+        "rm -rf output",
+      ]
     }
+  }
 }

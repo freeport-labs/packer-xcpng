@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <installation srtype="ext">
-    <primary-disk>vda</primary-disk>
+    <primary-disk>sda</primary-disk>
     <keymap>us</keymap>
     <root-password type="hash">$ROOT_PASS_HASH</root-password>
     <source type="local"></source>
