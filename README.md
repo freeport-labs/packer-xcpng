@@ -19,7 +19,7 @@ Create and image of XCP to deploy to bare-metal.
 
 # What is currently not working.
 
-When we image the drive via DD and reboot, Dom0 is unable to find the root parition label and we crash out to dracut. This at peculiar as GRUB2 is able to see the root-label without issue and Xen is even able to boot and start Dom0.
+When we image the drive via DD and reboot, Dom0 is unable to find the root parition label and we crash out to dracut. This is peculiar as GRUB2 is able to see the root-label without issue and Xen is even able to boot and start Dom0.
 
 When installing from ISO this was not an issue. I suspect either there was an issue with block-size alignment or not using the full disk when imaging. (Right now we create a 60GB image without a local SR).
 
