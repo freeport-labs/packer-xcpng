@@ -1,7 +1,7 @@
-# packer-curtin-xcpng
+# packer-xcpng
 
 ## About
-Packer script to build a qemu image of an XCP-NG Install. This isn't quite working yet and ultimately should be able to be deployed via curtin to support a BMC Deployment.
+Packer script to build a qemu image of an XCP-NG Install. This isn't quite working yet and ultimately should be able to support a BMC Deployment.
 
 ## Goals
 
