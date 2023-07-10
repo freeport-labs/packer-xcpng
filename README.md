@@ -7,6 +7,33 @@ Packer script to build a qemu image of an XCP-NG Install. This isn't quite worki
 
 Create and image of XCP to deploy to bare-metal.
 
+## Usage
+
+#### Secrets file.
+Create a secrets file called `secrets.pkrvars.hcl` in the repo root with your root password hash.
+
+```
+#secrets.pkrvars.hcl
+root_pass_hash = "<value_of_rootpass_hash>"
+```
+
+#### Building
+
+Build the image with:
+
+##### BIOS Systems
+```shell
+[user@buildmachine ~]# packer build -var-file=secrets.pkrvars.hcl xcpng-8.2-bios.pkr.hcl
+```
+
+##### UEFI Systems
+```shell
+[user@buildmachine ~]# packer build -var-file=secrets.pkrvars.hcl xcpng-8.2-uefi.pkr.hcl
+```
+
+# Known Issues
+The system will reboot after install and not shut down. Packer will only build the image if the VM cleanly shuts down. Currently this must be done manually. I tried to create a post-install script to shutdown the host but have not been able to get this to work yet. Alternative would be use a packer post-processor to trigger a clean VM shutdown.
+
 # Todo
 
 - Create image to match size of target disk, instead of expanding after install. QEMU Compression should help make this managable and we can expand during the imaging process.

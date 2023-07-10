@@ -7,6 +7,7 @@ packer {
     }
   }
 }
+
 variable "filename" {
   type        = string
   default     = "xcp-ng-8.2.1-bios-kernel-alt.tar.gz"
@@ -20,7 +21,6 @@ variable "iso_url" {
 
 variable "root_pass_hash" {
   type    = string
-  default = "root"
 }
 
 variable "xcp-ng-checksum" {
@@ -34,7 +34,7 @@ source "qemu" "xcp-ng" {
   ]
   boot_wait        = "1s"
   communicator     = "none"
-  disk_size        = "60G"
+  disk_size        = "1TB"
   headless         = false
   http_directory   = "http"
   iso_checksum     = "sha256:${var.xcp-ng-checksum}"
